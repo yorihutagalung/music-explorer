@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_explorer/src/presentation/pages/index.dart';
+import 'package:music_explorer/src/presentation/router.dart';
 
 class MusicExplorerApp extends StatelessWidget {
   const MusicExplorerApp({Key? key}) : super(key: key);
@@ -13,7 +13,8 @@ class MusicExplorerApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Music Explorer',
         theme: ThemeData(primarySwatch: Colors.brown),
-        home: const HomePage(),
+        routes: AppRouter.routes,
+        initialRoute: AppRouter.initialRoute,
       ),
     );
   }
