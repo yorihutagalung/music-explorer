@@ -29,6 +29,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get_it: ^7.2.0
+  equatable: ^2.0.3
+  built_collection: ^5.1.1
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+  dartz: ^0.10.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,6 +44,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  bloc_test: ^9.0.3
+  mocktail: ^0.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

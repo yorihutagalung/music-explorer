@@ -37,6 +37,10 @@ class _SearchField extends StatelessWidget {
             icon: const Icon(Icons.search),
           ),
         ),
+        onChanged: (value) {
+          BlocProvider.of<HomePageBloc>(context)
+              .add(HomePageQueryChanged(value));
+        },
       ),
     );
   }
