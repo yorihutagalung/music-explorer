@@ -90,13 +90,16 @@ class MusicPlayerRepository extends Disposable
   @override
   void togglePauseOrPlay() async {
     try {
+      final isCompleted =
+          _player.playerState.processingState == ProcessingState.completed;
       if (_checkIfStateIsLoading(_player.playerState)) {
         return;
       } else if (_player.playing) {
         _player.pause();
-      } else if (_player.playerState.processingState ==
-          ProcessingState.completed) {
+      } else if (isCompleted) {
         await _player.seek(const Duration());
+        _player.play();
+      } else {
         _player.play();
       }
     } on Exception catch (e) {
