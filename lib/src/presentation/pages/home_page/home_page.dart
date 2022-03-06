@@ -35,18 +35,45 @@ class _HomeBodyPage extends StatelessWidget {
         titleSpacing: 0,
         title: const _SearchField(),
       ),
-      body: BlocBuilder<HomePageBloc, HomePageState>(
+      body: BlocConsumer<HomePageBloc, HomePageState>(
+        listener: (context, state) {
+          state.failureOption.fold(
+            () => null,
+            (failure) => UiHelper.handleFailure(failure),
+          );
+        },
         builder: (context, state) {
           switch (state.resolver) {
             case StateResolver.loading:
               return const Center(child: CircularProgressIndicator());
             case StateResolver.failure:
-              return const SizedBox.shrink();
+              return Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: UiGap.big.size),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      state.failureOption.toNullable()?.error ?? '',
+                      textAlign: TextAlign.center,
+                      maxLines: 5,
+                    ),
+                    UiGap.big.verticalSpace,
+                    OutlinedButton(
+                      onPressed: () {
+                        BlocProvider.of<HomePageBloc>(context)
+                            .add(const HomePageRefreshCalled());
+                      },
+                      child: const Text("Refresh"),
+                    ),
+                  ],
+                ),
+              );
             case StateResolver.empty:
               return Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: UiGap.big.size),
-                child: Text(
+                child: const Text(
                   "No music found.\nTry to search musics by artist name \nin the field above",
                   textAlign: TextAlign.center,
                 ),

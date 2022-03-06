@@ -35,8 +35,8 @@ class HomePageState extends Equatable {
 
   StateResolver get resolver {
     if (isLoading) return StateResolver.loading;
-    if (musicList.isNotEmpty) return StateResolver.success;
     if (failureOption.isSome()) return StateResolver.failure;
+    if (musicList.isNotEmpty) return StateResolver.success;
     return StateResolver.empty;
   }
 

@@ -11,6 +11,7 @@ class MusicExplorerApp extends StatelessWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: MaterialApp(
+        navigatorKey: AppRouter.navigatorKey,
         title: 'Music Explorer',
         theme: ThemeData(primarySwatch: Colors.brown),
         routes: AppRouter.routes,

@@ -14,3 +14,10 @@ class HomePageQueryChanged extends HomePageEvent {
   @override
   List<Object> get props => [query];
 }
+
+class HomePageRefreshCalled extends HomePageEvent {
+  const HomePageRefreshCalled();
+
+  @override
+  List<Object> get props => [];
+}

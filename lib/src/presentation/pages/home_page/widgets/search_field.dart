@@ -33,7 +33,10 @@ class _SearchField extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             iconSize: 25,
             splashRadius: 18,
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<HomePageBloc>(context)
+                  .add(const HomePageRefreshCalled());
+            },
             icon: const Icon(Icons.search),
           ),
         ),
