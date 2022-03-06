@@ -94,7 +94,9 @@ class MusicPlayerRepository extends Disposable
         return;
       } else if (_player.playing) {
         _player.pause();
-      } else {
+      } else if (_player.playerState.processingState ==
+          ProcessingState.completed) {
+        await _player.seek(const Duration());
         _player.play();
       }
     } on Exception catch (e) {
