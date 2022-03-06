@@ -1,15 +1,20 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:music_explorer/config/injection.dart';
+import 'package:music_explorer/src/application/music_player/music_player_cubit.dart';
+import 'package:music_explorer/src/domain/app_failure.dart';
 import 'package:music_explorer/src/domain/music_explorer/entities/music.dart';
 import 'package:music_explorer/src/presentation/pages/const/state_resolver.dart';
 import 'package:music_explorer/src/presentation/utils/ui_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_explorer/src/presentation/widgets/music_player_container.dart';
 
 import 'bloc/home_page_bloc.dart';
 
 part 'widgets/search_field.dart';
 part 'widgets/music_list.dart';
+part 'widgets/empty_body.dart';
+part 'widgets/failure_body.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,42 +52,15 @@ class _HomeBodyPage extends StatelessWidget {
             case StateResolver.loading:
               return const Center(child: CircularProgressIndicator());
             case StateResolver.failure:
-              return Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: UiGap.big.size),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      state.failureOption.toNullable()?.error ?? '',
-                      textAlign: TextAlign.center,
-                      maxLines: 5,
-                    ),
-                    UiGap.big.verticalSpace,
-                    OutlinedButton(
-                      onPressed: () {
-                        BlocProvider.of<HomePageBloc>(context)
-                            .add(const HomePageRefreshCalled());
-                      },
-                      child: const Text("Refresh"),
-                    ),
-                  ],
-                ),
-              );
+              return _FailureBody(failure: state.failureOption.toNullable());
             case StateResolver.empty:
-              return Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: UiGap.big.size),
-                child: const Text(
-                  "No music found.\nTry to search musics by artist name \nin the field above",
-                  textAlign: TextAlign.center,
-                ),
-              );
+              return const _EmptyBody();
             case StateResolver.success:
               return _MusicList(list: state.musicList);
           }
         },
       ),
+      bottomNavigationBar: const MusicPlayerContainer(),
     );
   }
 }

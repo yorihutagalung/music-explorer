@@ -12,8 +12,6 @@ class MusicExplorerRepository implements IMusicExplorerRepository {
   @override
   Future<Either<AppFailure, BuiltList<Music>>> findAllMusic(
       {String query = ''}) async {
-    await Future.delayed(Duration(seconds: 1));
-    return left(AppFailure("error"));
     try {
       final musicList = await _musicDataSource.findAllMusic(query: query);
       return right(musicList.results.map((e) => e.toEntity()).toBuiltList());

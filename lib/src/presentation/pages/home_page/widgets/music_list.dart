@@ -34,7 +34,9 @@ class _MusicTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<MusicPlayerCubit>(context).play(music);
+      },
       child: Padding(
         padding: EdgeInsets.all(UiGap.normal.size),
         child: Row(
@@ -78,7 +80,20 @@ class _MusicTile extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+            UiGap.normal.horizontalSpace,
+            SizedBox(
+              width: 50,
+              child: BlocBuilder<MusicPlayerCubit, MusicPlayerState>(
+                builder: (context, state) => state.playBackOption.fold(
+                  () => const SizedBox.shrink(),
+                  (playBack) {
+                    if (playBack.music != music) return const SizedBox.shrink();
+                    return const Icon(Icons.multitrack_audio);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
